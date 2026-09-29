@@ -20,13 +20,34 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final child = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (icon != null) ...[icon!, const SizedBox(width: 8)],
-        Text(text),
-      ],
-    );
-    return ElevatedButton(onPressed: onPressed, child: child);
+    final scheme = Theme.of(context).colorScheme;
+    final enabled = !isLoading && onPressed != null;
+    final child = isLoading
+        ? const SizedBox.square(
+            dimension: 20,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          )
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) ...[icon!, const SizedBox(width: 8)],
+              Text(text),
+            ],
+          );
+
+    final callback = enabled ? onPressed : null;
+    return switch (style) {
+      CustomButtonStyle.primary => FilledButton(onPressed: callback, child: child),
+      CustomButtonStyle.secondary => FilledButton.tonal(onPressed: callback, child: child),
+      CustomButtonStyle.danger => FilledButton(
+          style: FilledButton.styleFrom(
+            backgroundColor: scheme.error,
+            foregroundColor: scheme.onError,
+          ),
+          onPressed: callback,
+          child: child,
+        ),
+      CustomButtonStyle.outline => OutlinedButton(onPressed: callback, child: child),
+    };
   }
 }
