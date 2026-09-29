@@ -1,0 +1,11 @@
+{
+  "name": "Mobile Widgets",
+  "short_name": "Mobile Widgets",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#3F51B5",
+  "description": "Reusable Flutter widgets and animations",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
+}
